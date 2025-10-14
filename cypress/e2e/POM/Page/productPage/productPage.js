@@ -7,7 +7,8 @@ class ProductPage {
             productNames:'.inventory_item_name',
             productDescriptions: '.inventory_item_desc',
             productPrices: '.inventory_item_price',
-            inventoryItems: '.inventory_item'
+            inventoryItems: '.inventory_item',
+            sortDropdown: '.product_sort_container'
         };
     }
 
@@ -23,12 +24,16 @@ class ProductPage {
         return cy.get(this.selectors.productImages)
     }
 
-    verifyProductCount() {
+    productNames() {
         return cy.get(this.selectors.productNames)
     }
 
     getAllProducts() {
         return cy.get(this.selectors.inventoryItems)
+    }
+
+    selectSort() {
+        return cy.get(this.selectors.sortDropdown)
     }
 
 }
