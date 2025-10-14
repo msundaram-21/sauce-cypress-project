@@ -64,6 +64,6 @@ Then('The products should be sorted alphabetically by name descending', function
             });
     }).then(() => {
         const sortedList = [...productList].sort((a, b) => a.localeCompare(a))
-        expect(productList, 'Products are in ascending alphabetical order').to.deep.equal(sortedList)
+        expect(productList, 'Products are in descending alphabetical order').to.deep.equal(sortedList)
     })
 })
