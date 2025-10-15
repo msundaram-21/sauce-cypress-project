@@ -28,6 +28,10 @@ class ProductPage {
         return cy.get(this.selectors.productNames)
     }
 
+    productPrice() {
+        return cy.get(this.selectors.productPrices)
+    }
+
     getAllProducts() {
         return cy.get(this.selectors.inventoryItems)
     }
