@@ -36,7 +36,15 @@ Then('Each products should have a name, description, and price', function () {
 })
 
 When('I select the sort option {string} from the dropdown', function (sortOption) {
-    const sortValue = sortOption === 'Name (A to Z)' ? 'az' : 'za'
+    let sortValue = ''
+    if (sortOption === 'Name (A to Z)')
+        sortValue = 'az'
+    else if (sortOption === 'Name (Z to A)')
+        sortValue = 'za'
+    else if (sortOption === 'Price (low to high)')
+        sortValue = 'lohi'
+    else
+        sortValue = 'hilo'
     ProductPage.selectSort().select(sortValue)
 })
 
@@ -67,3 +75,33 @@ Then('The products should be sorted alphabetically by name descending', function
         expect(productList, 'Products are in descending alphabetical order').to.deep.equal(sortedList)
     })
 })
+
+Then('The products should be sorted by price ascending', function () {
+    const productList = []
+    ProductPage.productPrice().each(($item) => {
+        cy.wrap($item)
+            .invoke('text')
+            .then((text) => {
+                const price = parseFloat(text.replace(/[^0-9.]/g, ''));
+                productList.push(price)
+            });
+    }).then(() => {
+        const sortedList = [...productList].sort((a, b) => a - b);
+        expect(productList, 'Products are sorted by price ascending').to.deep.equal(sortedList)
+    });
+});
+
+Then('The products should be sorted by price descending', function () {
+    const productList = []
+    ProductPage.productPrice().each(($item) => {
+        cy.wrap($item)
+            .invoke('text')
+            .then((text) => {
+                const price = parseFloat(text.replace(/[^0-9.]/g, ''));
+                productList.push(price)
+            });
+    }).then(() => {
+        const sortedList = [...productList].sort((a, b) => b - a);
+        expect(productList, 'Products are sorted by price descending').to.deep.equal(sortedList)
+    });
+});
